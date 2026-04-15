@@ -1,9 +1,9 @@
 "use client"
-import { useEffect } from 'react';
-import { motion } from 'motion/react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Leader from '@/sections/Leader';
@@ -11,6 +11,18 @@ import Leader from '@/sections/Leader';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function About() {
+    const [showCells, setShowCells] = useState(false);
+
+    const cellGroups = [
+        { name: 'LASU', link: 'https://chat.whatsapp.com/JSOsr8eq5xH2XK0kdJbAlF' },
+        { name: 'FUOYE', link: 'https://chat.whatsapp.com/D5Drmcfij8aLchpdHIGJMV' },
+        { name: 'UI', link: 'https://chat.whatsapp.com/C01FvTVrIrnHJQA4frSbGC' },
+        { name: 'OAU', link: 'https://chat.whatsapp.com/IJ7GjVpQHsA7QWozafRIBC' },
+        { name: 'UNILAG', link: 'https://chat.whatsapp.com/JKwuk5WlnVe0wETwGB5r4w' },
+        { name: 'RUN', link: 'https://chat.whatsapp.com/FAAXHkXkjcR3d47DSF48u9' },
+        { name: 'UNILORIN', link: 'https://chat.whatsapp.com/CJtFfrcJrmp5yggRBeghHt' },
+    ];
+
     useEffect(() => {
         const ctx = gsap.context(() => {
             gsap.from('.hero-line', {
@@ -238,7 +250,7 @@ export default function About() {
                         {[
                             { title: 'Femi Steven Enclaves', tag: 'Discipleship', desc: 'The discipleship arm where believers undergo intentional spiritual training designed to build strong foundations and cultivate disciplined Kingdom ambassadors. Through structured teaching, mentorship, and accountability, lives are transformed.' },
                             { title: 'Cell Groups', tag: 'Community', desc: 'KAN cell groups are present across multiple campuses, creating communities where believers grow together in faith, build relationships, and are equipped to reach others.' },
-                            { title: 'DOXA Worship', tag: 'Worship', desc: 'The worship expression dedicated to releasing faith-filled, revelational sounds that edify the Body of Christ and stir a deeper hunger for God. It is about ministry, expression, and encountering God deeply.' },
+                            { title: 'DoxaSongs', tag: 'Worship', desc: 'The worship expression dedicated to releasing faith-filled, revelational sounds that edify the Body of Christ and stir a deeper hunger for God. It is about ministry, expression, and encountering God deeply.' },
                             { title: 'The Exodus Move', tag: 'Outreach', desc: 'An outreach arm with the mandate of getting the gospel to all and liberating men from captivity through all forms of evangelism, outreaches, and crusades across the nation and the world.' },
                         ].map((item, i) => (
                             <div key={i} className="border-t border-[#E8E8E8] py-10 grid grid-cols-1 lg:grid-cols-12 gap-6">
@@ -252,6 +264,50 @@ export default function About() {
                                 </div>
                                 <div className="lg:col-span-7">
                                     <p className="text-[#0D0D0D]/55 leading-relaxed text-base">{item.desc}</p>
+                                    {item.title === 'Cell Groups' && (
+                                        <div className="mt-6">
+                                            <button
+                                                onClick={() => setShowCells(!showCells)}
+                                                className="flex items-center gap-2 text-[#BF3C88] font-bold text-sm tracking-widest uppercase group/btn"
+                                            >
+                                                View all cells
+                                                <ChevronDown
+                                                    size={16}
+                                                    className={`transition-transform duration-300 ${showCells ? 'rotate-180' : ''}`}
+                                                />
+                                            </button>
+
+                                            <AnimatePresence>
+                                                {showCells && (
+                                                    <motion.div
+                                                        initial={{ height: 0, opacity: 0 }}
+                                                        animate={{ height: 'auto', opacity: 1 }}
+                                                        exit={{ height: 0, opacity: 0 }}
+                                                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                                                        className="overflow-hidden"
+                                                    >
+                                                        <div className="pt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                                            {cellGroups.map((group, idx) => (
+                                                                <div
+                                                                    key={idx}
+                                                                    className="p-4 border border-[#E8E8E8] flex flex-col justify-between items-start gap-4 hover:border-[#BF3C88]/30 transition-colors bg-[#F5F5F3]/30"
+                                                                >
+                                                                    <span className="font-bold text-[#0D0D0D] tracking-tight">{group.name}</span>
+                                                                    <Link
+                                                                        href={group.link}
+                                                                        target="_blank"
+                                                                        className="text-[0.7rem] uppercase tracking-widest font-bold text-[#BF3C88] flex items-center gap-1 hover:gap-2 transition-all"
+                                                                    >
+                                                                        Join Group <ArrowUpRight size={12} />
+                                                                    </Link>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         ))}

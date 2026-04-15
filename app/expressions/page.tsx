@@ -1,15 +1,27 @@
 "use client"
-import { useEffect } from 'react';
-import { motion } from 'motion/react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, ChevronDown, ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Expressions() {
+    const [showCells, setShowCells] = useState(false);
+
+    const cellGroups = [
+        { name: 'LASU', link: 'https://chat.whatsapp.com/JSOsr8eq5xH2XK0kdJbAlF' },
+        { name: 'FUOYE', link: 'https://chat.whatsapp.com/D5Drmcfij8aLchpdHIGJMV' },
+        { name: 'UI', link: 'https://chat.whatsapp.com/C01FvTVrIrnHJQA4frSbGC' },
+        { name: 'OAU', link: 'https://chat.whatsapp.com/IJ7GjVpQHsA7QWozafRIBC' },
+        { name: 'UNILAG', link: 'https://chat.whatsapp.com/JKwuk5WlnVe0wETwGB5r4w' },
+        { name: 'RUN', link: 'https://chat.whatsapp.com/FAAXHkXkjcR3d47DSF48u9' },
+        { name: 'UNILORIN', link: 'https://chat.whatsapp.com/CJtFfrcJrmp5yggRBeghHt' },
+    ];
+
     useEffect(() => {
         const ctx = gsap.context(() => {
             gsap.from('.hero-line', {
@@ -175,6 +187,51 @@ export default function Expressions() {
                                     {expr.paragraphs.map((p, i) => (
                                         <p key={i} className="text-[#0D0D0D]/55 text-base leading-relaxed">{p}</p>
                                     ))}
+
+                                    {expr.title === 'Cell Groups' && (
+                                        <div className="pt-4">
+                                            <button
+                                                onClick={() => setShowCells(!showCells)}
+                                                className="flex items-center gap-2 text-[#BF3C88] font-bold text-sm tracking-widest uppercase group/btn"
+                                            >
+                                                View all cells
+                                                <ChevronDown
+                                                    size={16}
+                                                    className={`transition-transform duration-300 ${showCells ? 'rotate-180' : ''}`}
+                                                />
+                                            </button>
+
+                                            <AnimatePresence>
+                                                {showCells && (
+                                                    <motion.div
+                                                        initial={{ height: 0, opacity: 0 }}
+                                                        animate={{ height: 'auto', opacity: 1 }}
+                                                        exit={{ height: 0, opacity: 0 }}
+                                                        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                                                        className="overflow-hidden"
+                                                    >
+                                                        <div className="pt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                            {cellGroups.map((group, idx) => (
+                                                                <div
+                                                                    key={idx}
+                                                                    className="p-4 border border-[#E8E8E8] flex flex-col justify-between items-start gap-4 hover:border-[#BF3C88]/30 transition-colors bg-white/50"
+                                                                >
+                                                                    <span className="font-bold text-[#0D0D0D] tracking-tight">{group.name}</span>
+                                                                    <Link
+                                                                        href={group.link}
+                                                                        target="_blank"
+                                                                        className="text-[0.7rem] uppercase tracking-widest font-bold text-[#BF3C88] flex items-center gap-1 hover:gap-2 transition-all"
+                                                                    >
+                                                                        Join Group <ArrowUpRight size={12} />
+                                                                    </Link>
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </motion.div>
+                                                )}
+                                            </AnimatePresence>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
 

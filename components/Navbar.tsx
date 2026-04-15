@@ -143,7 +143,7 @@ export function Navbar() {
                                     className="inline-flex items-center gap-3 border border-white/30 text-white px-8 py-4 font-semibold uppercase text-xs tracking-[0.15em]"
                                 >
                                     <span className="w-2 h-2 rounded-full bg-[#BF3C88] animate-pulse" />
-                                    Join Live Now
+                                    Join Our Community
                                 </a>
                             </motion.div>
                         </div>
@@ -156,13 +156,13 @@ export function Navbar() {
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                href="https://meet.google.com/osf-ddca-ohy"
+                href="https://chat.whatsapp.com/L4UUKcT1cZuAGSQrqL9FI4?mode=gi_t"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="lg:hidden fixed bottom-6 right-6 bg-white text-[#0D0D0D] px-6 py-3.5 font-bold uppercase text-[0.75rem] tracking-[0.15em] shadow-2xl z-50 flex items-center gap-2 transition-all hover:bg-white/90"
             >
                 <span className="w-1.5 h-1.5 rounded-full bg-[#BF3C88] animate-pulse" />
-                Join Live
+                Join Our Community
             </motion.a>
         </>
     );
